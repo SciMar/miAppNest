@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Put, Delete, Query } from '@nestjs/common';
 import { ProductsService } from './products.service';
 
 @Controller('products') // Ruta base: /products
@@ -11,13 +11,13 @@ export class ProductsController {
     return this.productsService.findAll();
   }
 
-  // GET /products/:id → Obtener un producto por ID
+  // Obtener un producto por ID
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.productsService.findOne(Number(id));
   }
 
-  // POST /products → Crear un nuevo producto
+  // Crear un nuevo producto
   @Post()
   create(
     @Body() product: { name: string; price: number; description: string }
@@ -25,7 +25,7 @@ export class ProductsController {
     return this.productsService.create(product);
   }
 
-  // PUT /products/:id → Actualizar un producto
+  // Actualizar un producto
   @Put(':id')
   update(
     @Param('id') id: string,
@@ -34,10 +34,18 @@ export class ProductsController {
     return this.productsService.update(Number(id), updateData);
   }
 
-  // DELETE /products/:id → Eliminar un producto
+  // Eliminar un producto
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.productsService.remove(Number(id));
   }
+
+  // GET /products/search?q=... → Buscar productos por nombre o descripción
+
+  @Get('search')
+  search(@Query('q') query: string) {
+    return this.productsService.search(query);
+}
+
 }
 

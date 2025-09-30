@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { IUser } from 'src/interfaces/IUser';
 
-export type IUser = { id: number; name: string; email: string };
 
 @Injectable()
 export class UsersService {
@@ -17,28 +17,30 @@ export class UsersService {
         if (!userFind) throw new NotFoundException ('Usuario no encontrado')
             return userFind;
     }
-//para agrear un nuevo usuario
-    create(user: { name: string; email: string }): IUser {
-        const newUser = {
-            id: this.users.length + 1,
-            ...user,
+//para agrear un nuevo usuario 
+    create(user: Omit<IUser, 'id'>): IUser { //Omit quita el id del tipo IUser
+        const newId = this.users.length >0 //Hay usuarios
+        ? this.users[this.users.length - 1].id +1  //suma 1 al ultimo id
+            :1; //Si no hay usuarios, el id sera 1
+
+        const newUser:IUser = { 
+            id: newId, ...user
         };
-        this.users.push(newUser);
+        
+        this.users.push(newUser);   
         return newUser;
     }
 
 //se busca al usuario por id y se actualiza su informacion(Solo lo que llega en el body)
-    update(id: number, updatedUser: { name?: string; email?: string }) {
-    const userIndex = this.users.findIndex((user) => user.id === id);
-    if (userIndex === -1) {
-        throw new NotFoundException('Usuario no encontrado');
+    update(id: number, newUser: Omit<IUser, 'id'>): IUser { //Omit quita el id del tipo IUser
+        const user = this.findOne(id); //busca el usuario por id
+        Object.assign(user, newUser); //actualiza el usuario con la nueva informacion
+        return user; //retorna el usuario actualizado
     }
 
-    this.users[userIndex] = {
-        ...this.users[userIndex],
-        ...updatedUser,
-    };
-
-    return this.users[userIndex];
-    }
+    remove(id: number){
+        const user = this.users.findIndex((user) => user.id === id);
+        this.users.splice(user, 1);
+        return { delete: true }
+    }    
 }

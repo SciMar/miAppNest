@@ -1,31 +1,37 @@
-import { Controller, Get, Post, Param, Body, Put, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Put, Patch, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { IUser } from 'src/interfaces/IUser';
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
-    @Get()
-    findAll() {
-        return this.usersService.findAll();
-    }
-    @Get(':id')
-    findOne(@Param('id')id:string){
-        return this.usersService.findOne(Number(id))
-    }
-    @Post()
-    create(@Body() user: { name: string; email: string }) {
-        return this.usersService.create(user);
-    }
-    // ✅ PUT para reemplazar datos completos
-    @Put(':id')
-    update(@Param('id') id: string, @Body() updatedUser: { name?: string; email?: string }) {
-        return this.usersService.update(Number(id), updatedUser);
+    @Get() //todos los usuarios
+    findAll() { //metodo del servicio
+    return this.usersService.findAll();
     }
 
-    // ✅ PATCH para actualizar parcialmente (ejemplo: solo email)
-    @Patch(':id')
-    partialUpdate(@Param('id') id: string, @Body() updatedUser: { name?: string; email?: string }) {
-        return this.usersService.update(Number(id), updatedUser);
+    // ✅ GET para obtener un usuario por ID (lee)
+    @Get(':id') //un usuario por id
+    findOne(@Param('id')id:string){ //el id viene como string
+        return this.usersService.findOne(Number(id)) //se convierte a numero
+    }
+
+    // ✅ POST para crear un nuevo usuario (crea)
+    @Post() 
+    create(@Body() body:Omit<IUser, 'id' >) { //Omit quita el id del tipo IUser
+        return this.usersService.create(body); //el body tiene el usuario sin id
+    }
+
+    // ✅ PUT para actualizar completamente un usuario (ejemplo: nombre y email)
+    @Put(':id')
+    update(@Param('id') id: string, @Body() body: Omit<IUser, 'id'>){ //Omit quita el id del tipo IUser
+        return this.usersService.update(Number(id), body); //el body tiene el usuario sin id
+    }
+
+    // ✅ DELETE para eliminar un usuario por ID (elimina)
+    @Delete(':id') 
+    remove (@Param('id') id: string) { //el id viene como string
+        return this.usersService.remove(Number(id));
     }
 
 }
