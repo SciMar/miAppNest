@@ -1,6 +1,8 @@
 import { Controller, Get, Post, Param, Body, Put, Patch, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { IUser } from 'src/interfaces/IUser';
+import { CreateUserDTO } from 'src/dto/create-user.dto';
+import { UpdateUserDTO } from 'src/dto/update-user.dto';
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
@@ -18,13 +20,13 @@ export class UsersController {
 
     // ✅ POST para crear un nuevo usuario (crea)
     @Post() 
-    create(@Body() body:Omit<IUser, 'id' >) { //Omit quita el id del tipo IUser
+    create(@Body() body:CreateUserDTO) { //Omit quita el id del tipo IUser
         return this.usersService.create(body); //el body tiene el usuario sin id
     }
 
     // ✅ PUT para actualizar completamente un usuario (ejemplo: nombre y email)
     @Put(':id')
-    update(@Param('id') id: string, @Body() body: Omit<IUser, 'id'>){ //Omit quita el id del tipo IUser
+    update(@Param('id') id: string, @Body() body: UpdateUserDTO){ //Omit quita el id del tipo IUser
         return this.usersService.update(Number(id), body); //el body tiene el usuario sin id
     }
 

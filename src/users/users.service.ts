@@ -5,8 +5,17 @@ import { IUser } from 'src/interfaces/IUser';
 @Injectable()
 export class UsersService {
     private users: IUser [] = [
-        { id: 1, name: 'Marcela', email: 'marce@gmail.com'},
-        { id: 2, name: 'Ana', email: 'marce@gmail.com' }
+        { 
+            id: 1, 
+            name: 'Marcela', 
+            email: 'marce@gmail.com', 
+            password: '1234' 
+        },
+        { 
+            id: 2, 
+            name: 'Ana', 
+            email: 'marce@gmail.com', 
+            password: '5678' },
     ]
         
     findAll(): IUser[] {
@@ -37,10 +46,9 @@ export class UsersService {
         Object.assign(user, newUser); //actualiza el usuario con la nueva informacion
         return user; //retorna el usuario actualizado
     }
-
-    remove(id: number){
-        const user = this.users.findIndex((user) => user.id === id);
-        this.users.splice(user, 1);
-        return { delete: true }
+//elimina un usuario por id
+    remove(id: number){ //elimina un usuario por id
+        const user = this.users.findIndex((user) => user.id === id); //busca el indice del usuario por id
+        this.users.splice(user, 1); //elimina el usuario del array
     }    
 }
