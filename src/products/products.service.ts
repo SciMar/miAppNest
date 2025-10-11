@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { IProducts } from 'src/interfaces/IProducts';
+import { IProducts } from 'src/interfaces';
 
 @Injectable()
 export class ProductsService {
@@ -33,29 +33,32 @@ export class ProductsService {
     return productFind;
   } //reto 18 septiembre
 
+  //para agrear un nuevo producto 
+      create(product: Omit<IProducts, 'id'>): IProducts { //Omit quita el id del tipo IProducts
+          const newId = this.products.length >0 //Hay productos
+          ? this.products[this.products.length - 1].id +1  //suma 1 al ultimo id
+              :1; //Si no hay productos, el id sera 1
   
-
-  // Crear un nuevo producto
-  create(product: { name: string; price: number; description: string }) {
-    const newId = this.products.length > 0 ? Math.max(...this.products.map(p => p.id)) + 1 : 1; // Generar nuevo ID
-    const newProduct = { id: newId, ...product };
-    this.products.push(newProduct);
-    return newProduct;
-  }
+          const newProduct:IProducts = { 
+              id: newId, ...product
+          };
+          this.products.push(newProduct);   
+          return newProduct;
+      }
 
   // Actualizar un producto
-  update(id: number, updateData: Partial<{ name: string; price: number; description: string }>) {
-    const product = this.findOne(id); // lanzará NotFoundException si no existe
-    Object.assign(product, updateData);
-    return product;
-  }
+   update(id: number, newProduct: Omit<IProducts, 'id'>): IProducts { 
+         const product = this.findOne(id); 
+         Object.assign(product, newProduct); 
+         return product;
+      }
 
   // Eliminar un producto
-  remove(id: number) {
-    const index = this.products.findIndex(p => p.id === id);
-    if (index === -1) throw new NotFoundException(`Product with id ${id} not found`);
-    return this.products.splice(index, 1)[0];
-  }
+   remove(id: number){ 
+        const product = this.products.findIndex((product) => product.id === id);
+        this.products.splice(product, 1)
+        return {delete: true} 
+    } 
 
   // buscar productos por nombre o descripción
 search(query: string) {

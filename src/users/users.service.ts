@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { IUser } from 'src/interfaces/IUser';
+import { IUser, IProducts } from 'src/interfaces';
+
 @Injectable()
 export class UsersService { //Servicio para manejar los usuarios
     private users: IUser [] = [
@@ -27,7 +28,7 @@ export class UsersService { //Servicio para manejar los usuarios
         const userFind = this.users.find((user) => user.id === id)
         if (!userFind) throw new NotFoundException('Usuario no encontrado')
         return userFind
-    } //clase 17 septiembre
+    } //clase 17 septiembre -----------------------------------------------------
 
 
 //para agrear un nuevo usuario 
@@ -39,22 +40,22 @@ export class UsersService { //Servicio para manejar los usuarios
         const newUser:IUser = { 
             id: newId, ...user
         };
-        
         this.users.push(newUser);   
         return newUser;
     }
-    throw new BadRequestException('El usuario debe ser mayor de edad')
-
+//actualiza un usuario por id
 //se busca al usuario por id y se actualiza su informacion(Solo lo que llega en el body)
     update(id: number, newUser: Omit<IUser, 'id'>): IUser { //Omit quita el id del tipo IUser
        const user = this.findOne(id); //busca el usuario por id
        Object.assign(user, newUser); //actualiza el usuario con la nueva informacion
        return user; //retorna el usuario actualizado
     }
+    
 //elimina un usuario por id
     remove(id: number){ //elimina un usuario por id
         const user = this.users.findIndex((user) => user.id === id); //busca el indice del usuario por id
-        this.users.splice(user, 1); //elimina el usuario del array
+        this.users.splice(user, 1)
+        return {delete: true} //elimina el usuario del array
     }   
  
 }

@@ -18,7 +18,7 @@ export class UsersController {
     @Get(':id') //un usuario por id
     findOne(@Param('id')id:string){ //el id viene como string
         return this.usersService.findOne(Number(id)) //se convierte a numero
-    } //clase 17 septiembre
+    } //clase 17 septiembre -----------------------------------------------------
 
     // ✅ POST para crear un nuevo usuario (crea)
     @Post() 
@@ -29,7 +29,8 @@ export class UsersController {
     // ✅ PUT para actualizar completamente un usuario (ejemplo: nombre y email)
     @Put(':id')
     update(@Param('id') id: string, @Body() body: UpdateUserDTO){ //Omit quita el id del tipo IUser
-        return this.usersService.update(Number(id), body); //el body tiene el usuario sin id
+        return this.usersService.update(Number(id), body);
+        //el body tiene el usuario sin id
     }
 
     // ✅ DELETE para eliminar un usuario por ID (elimina)

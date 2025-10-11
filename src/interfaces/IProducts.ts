@@ -1,3 +1,4 @@
+//archivo de interfaces (barril)
 export type IProducts = { 
     id: number; 
     name: string; 
