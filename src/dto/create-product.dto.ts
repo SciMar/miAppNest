@@ -12,5 +12,6 @@ export class CreateProductDTO {
     @MaxLength(10)
     category: string;
 
-    description: string 
-};
+    @IsNotEmpty()
+    description: string;
+}

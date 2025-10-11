@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { IUser, IProducts } from 'src/interfaces';
+import { IUser } from 'src/interfaces';
 
 @Injectable()
 export class UsersService { //Servicio para manejar los usuarios
@@ -57,5 +57,5 @@ export class UsersService { //Servicio para manejar los usuarios
         this.users.splice(user, 1)
         return {delete: true} //elimina el usuario del array
     }   
- 
+  //clase 18 septiembre -----------------------------------------------------
 }

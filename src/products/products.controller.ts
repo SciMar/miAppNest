@@ -37,13 +37,6 @@ export class ProductsController {
   remove(@Param('id') id: string) {
     return this.productsService.remove(Number(id));
   }
-
-  // GET /products/search?q=... → Buscar productos por nombre o descripción
-
-  @Get('search')
-  search(@Query('q') query: string) {
-    return this.productsService.search(query);
-}
-
+ //CRUD PRODUCTOS -------------------------------------------------------
 }
 

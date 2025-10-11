@@ -58,16 +58,6 @@ export class ProductsService {
         const product = this.products.findIndex((product) => product.id === id);
         this.products.splice(product, 1)
         return {delete: true} 
-    } 
-
-  // buscar productos por nombre o descripción
-search(query: string) {
-  const lowerQuery = query.toLowerCase();
-  return this.products.filter(
-    p =>
-      p.name.toLowerCase().includes(lowerQuery) ||
-      p.description.toLowerCase().includes(lowerQuery)
-  );
-}
+      } 
 
 }
