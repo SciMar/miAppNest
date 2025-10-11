@@ -1,23 +1,39 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { IProducts } from 'src/interfaces/IProducts';
 
 @Injectable()
 export class ProductsService {
-  private products = [
-    { id: 1, name: 'Laptop', price: 1200000, description: "24 pulgadas" },
-    { id: 2, name: 'Mouse', price: 20000, description: "Inalambrico" },
-  ];
+  private products : IProducts [] = [
+    { 
+      id: 1, 
+      name: 'Laptop', 
+      price: 1200000, 
+      category: "Electronica",
+      description: "24 pulgadas"
+    },
+
+    { 
+      id: 2, 
+      name: 'Mouse', 
+      price: 20000, 
+      category: "Accesorios",
+      description: "Inalambrico" 
+    }
+  ]
 
   // Obtener todos los productos
-  findAll() {
+  findAll(): IProducts []{
     return this.products;
   }
 
   // Obtener un producto por ID
-  findOne(id: number) {
-    const product = this.products.find((p) => p.id === id); // 
-    if (!product) throw new NotFoundException(`Product with id ${id} not found`);
-    return product;
-  }
+  findOne(id: number): IProducts {
+    const productFind = this.products.find((product) => product.id === id); // 
+    if (!productFind) throw new NotFoundException('Producto no encontrado')
+    return productFind;
+  } //reto 18 septiembre
+
+  
 
   // Crear un nuevo producto
   create(product: { name: string; price: number; description: string }) {

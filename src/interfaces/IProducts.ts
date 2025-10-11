@@ -1,1 +1,7 @@
-export type IProducts = { id: number; name: string; price: number; description: string };
+export type IProducts = { 
+    id: number; 
+    name: string; 
+    price: number; 
+    category: string;
+    description: string 
+};

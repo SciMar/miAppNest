@@ -1,1 +1,6 @@
-export type IUser = { id: number; name: string; email: string; password:string; age: number };
+export type IUser = { 
+    id: number; 
+    name: string; 
+    email: string; 
+    password:string; 
+    age: number };
