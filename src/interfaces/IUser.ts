@@ -3,4 +3,4 @@ export type IUser = {
     name: string; 
     email: string; 
     password:string; 
-    age: number };
+    age?: number }; //edad opcional

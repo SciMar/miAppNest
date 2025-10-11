@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { IUser } from 'src/interfaces';
 
 @Injectable()
@@ -8,8 +8,7 @@ export class UsersService { //Servicio para manejar los usuarios
             id: 1, 
             name: 'Marcela', 
             email: 'marce@gmail.com', 
-            password: '1234',
-            age: 30
+            password: '123456',
         },
         { 
             id: 2, 
@@ -30,19 +29,22 @@ export class UsersService { //Servicio para manejar los usuarios
         return userFind
     } //clase 17 septiembre -----------------------------------------------------
 
-
-//para agrear un nuevo usuario 
+    //para agrear un nuevo usuario 
     create(user: Omit<IUser, 'id'>): IUser { //Omit quita el id del tipo IUser
         const newId = this.users.length >0 //Hay usuarios
         ? this.users[this.users.length - 1].id +1  //suma 1 al ultimo id
             :1; //Si no hay usuarios, el id sera 1
 
+        if (user.age && user.age >=18) {
         const newUser:IUser = { 
             id: newId, ...user
-        };
-        this.users.push(newUser);   
-        return newUser;
+            };
+            this.users.push(newUser);   
+            return newUser;
+        }
+        throw new BadRequestException('El usuario debe ser mayor a 18 años')
     }
+
 //actualiza un usuario por id
 //se busca al usuario por id y se actualiza su informacion(Solo lo que llega en el body)
     update(id: number, newUser: Omit<IUser, 'id'>): IUser { //Omit quita el id del tipo IUser
