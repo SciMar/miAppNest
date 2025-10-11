@@ -5,7 +5,9 @@ import { CreateUserDTO } from 'src/dto/create-user.dto';
 import { UpdateUserDTO } from 'src/dto/update-user.dto';
 @Controller('users')
 export class UsersController {
-    constructor(private readonly usersService: UsersService) {}
+    constructor(private readonly usersService: UsersService) {} 
+    
+    //inyeccion de dependencia
 
     @Get() //todos los usuarios
     findAll() { //metodo del servicio
@@ -16,7 +18,7 @@ export class UsersController {
     @Get(':id') //un usuario por id
     findOne(@Param('id')id:string){ //el id viene como string
         return this.usersService.findOne(Number(id)) //se convierte a numero
-    }
+    } //clase 17 septiembre
 
     // ✅ POST para crear un nuevo usuario (crea)
     @Post() 

@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+ import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -8,10 +8,10 @@ export class AppController {
   //Endpoint de ruta localhost:3000/ que me responde un Hola Mundo
   @Get()
   getHello(): string {
-    return this.appService.getHello();
+    return this.appService.getHello(); //ejecuta la lógica que provee el servicio appService
   }
 
-  //Endpoint de ruta localhost:3000/status que me responde un mensaje de estado
+  //Endpoint de ruta localhost:3000/status que me responde un mensaje de estado de la app
   @Get('status')
   getStatus() {
     return this.appService.getStatus();
