@@ -1,6 +1,5 @@
 import { Controller, Get, Post, Param, Body, Put, Patch, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { IUser } from 'src/interfaces/IUser';
 import { CreateUserDTO } from 'src/dto/create-user.dto';
 import { UpdateUserDTO } from 'src/dto/update-user.dto';
 @Controller('users')
@@ -13,7 +12,7 @@ export class UsersController {
     findAll() { //metodo del servicio
     return this.usersService.findAll();
     }
-
+/*
     // ✅ GET para obtener un usuario por ID (lee)
     @Get(':id') //un usuario por id
     findOne(@Param('id')id:string){ //el id viene como string
@@ -38,5 +37,5 @@ export class UsersController {
     remove (@Param('id') id: string) { //el id viene como string
         return this.usersService.remove(Number(id));
     }
-
+*/
 }

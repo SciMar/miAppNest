@@ -15,14 +15,14 @@ export class ProductsController {
 
   // Obtener un producto por ID
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  encontrarUnoPorId(@Param('id') id: string) {
     return this.productsService.findOne(Number(id));
   }
   //reto 18 septiembre -------------------------------------------------------
 
   // Crear un nuevo producto
   @Post()
-  create( @Body() body:CreateProductDTO) {
+  crear( @Body() body:CreateProductDTO) {
     return this.productsService.create(body);
   }
 

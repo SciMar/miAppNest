@@ -1,29 +1,21 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
-import { IUser } from 'src/interfaces';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/entities/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService { //Servicio para manejar los usuarios
-    private users: IUser [] = [
-        { 
-            id: 1, 
-            name: 'Marcela', 
-            email: 'marce@gmail.com', 
-            password: '123456',
-        },
-        { 
-            id: 2, 
-            name: 'Ana', 
-            email: 'marce@gmail.com', 
-            password: '5678',
-            age: 25
-        }
-    ]
         
-    findAll(): IUser[] {
-        return this.users;
+    constructor (
+        @InjectRepository(User)
+        private usersRepo: Repository<User>
+    ) {}
+
+    findAll() {
+        return this.usersRepo.find();
     }
 
-    findOne(id: number): IUser {
+    /*findOne(id: number): IUser {
         const userFind = this.users.find((user) => user.id === id)
         if (!userFind) throw new NotFoundException('Usuario no encontrado')
         return userFind
@@ -59,5 +51,6 @@ export class UsersService { //Servicio para manejar los usuarios
         this.users.splice(user, 1)
         return {delete: true} //elimina el usuario del array
     }   
-  //clase 18 septiembre -----------------------------------------------------
+  //clase 18 septiembre -----------------------------------------------------*/
 }
+  

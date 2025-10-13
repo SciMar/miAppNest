@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { IProducts } from 'src/interfaces';
 
+
 @Injectable()
 export class ProductsService {
   private products : IProducts [] = [
@@ -54,10 +55,9 @@ export class ProductsService {
       }
 
   // Eliminar un producto
-   remove(id: number){ 
+   remove(id: number):void{ 
         const product = this.products.findIndex((product) => product.id === id);
         this.products.splice(product, 1)
-        return {delete: true} 
       } 
 
 }
