@@ -12,8 +12,8 @@ export class UsersController {
     findAll() { //metodo del servicio
     return this.usersService.findAll();
     }
-/*
-    // ✅ GET para obtener un usuario por ID (lee)
+
+    //✅ GET para obtener un usuario por ID (lee)
     @Get(':id') //un usuario por id
     findOne(@Param('id')id:string){ //el id viene como string
         return this.usersService.findOne(Number(id)) //se convierte a numero
@@ -37,5 +37,4 @@ export class UsersController {
     remove (@Param('id') id: string) { //el id viene como string
         return this.usersService.remove(Number(id));
     }
-*/
 }
