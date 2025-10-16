@@ -4,10 +4,18 @@ import { CreateUserDTO } from 'src/dto/create-user.dto';
 import { UpdateUserDTO } from 'src/dto/update-user.dto';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
-
+//Servicio para manejar los usuarios
 @Injectable()
 export class UsersService { //Servicio para manejar los usuarios
-        
+    /**
+     * Inyecta el repositorio de usuarios para interactuar con la base de datos
+     * @param usersRepo Repositorio de la entidad User
+     * findAll(): Devuelve todos los usuarios
+     * findOne(id: number): Devuelve un usuario por su ID
+     * create(newUser: CreateUserDTO): Crea un nuevo usuario
+     * update(id: number, UpdateUser: UpdateUserDTO): Actualiza un usuario existente
+     * remove(id: number): Elimina un usuario por su ID
+     */
     constructor (
         @InjectRepository(User)
         private usersRepo: Repository<User>
@@ -17,6 +25,7 @@ export class UsersService { //Servicio para manejar los usuarios
         return this.usersRepo.find();
     }
 
+    // Busca un usuario por su ID
     async findOne(id: number) {
         const userFind = await this.usersRepo.findOne ({where:{id}})
         if (!userFind) throw new NotFoundException('Usuario no encontrado')

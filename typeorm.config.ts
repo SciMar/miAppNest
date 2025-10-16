@@ -1,3 +1,4 @@
+// en este archivo se configura la conexión a la base de datos utilizando TypeORM y las variables de entorno definidas en el archivo .env
 import * as dotenv from 'dotenv';
 import { DataSource } from 'typeorm';
 import { User } from './src/entities/user.entity';
