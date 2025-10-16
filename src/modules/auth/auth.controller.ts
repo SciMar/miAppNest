@@ -1,7 +1,8 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDTO } from 'src/dto/login.dto';
 import { CreateUserDTO } from 'src/dto/create-user.dto';
+import { JwtAuthGuard } from './jwt.guard';
 
 // Controlador de Autenticación
 
@@ -20,5 +21,15 @@ export class AuthController {
     @Post('login')
     login(@Body() data: LoginDTO) {
         return this.aunthService.login(data);
+    }
+
+    //profile
+    // Ruta protegida para obtener el perfil del usuario autenticado
+    // http://localhost:3000/auth/profile
+    // Requiere un token JWT válido en el encabezado de autorización
+    @UseGuards(JwtAuthGuard) // Aplica la guardia JWT para proteger esta ruta
+    @Get('profile')
+    getProfile(@Request() req) {
+        return req.user;
     }
 }

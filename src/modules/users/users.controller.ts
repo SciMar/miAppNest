@@ -1,12 +1,13 @@
-import { Controller, Get, Post, Param, Body, Put, Patch, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Put, Patch, Delete, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDTO } from 'src/dto/create-user.dto';
 import { UpdateUserDTO } from 'src/dto/update-user.dto';
-@Controller('users')
+import { JwtAuthGuard } from '../auth/jwt.guard';
+@Controller('users') //ruta base del controlador
+@UseGuards(JwtAuthGuard) //protege todas las rutas de este controlador
+
 export class UsersController {
     constructor(private readonly usersService: UsersService) {} 
-    
-    //inyeccion de dependencia
 
     @Get() //todos los usuarios
     findAll() { //metodo del servicio
